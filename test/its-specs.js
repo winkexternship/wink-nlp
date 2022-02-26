@@ -38,6 +38,7 @@ var winkNLP = require( '../src/wink-nlp.js' );
 var its = require( '../src/its.js' );
 var as = require( '../src/as.js' );
 var model = require( './test-model/model.js' );
+var documents = require( './data/sample-docs.js' );
 
 var expect = chai.expect;
 var describe = mocha.describe;
@@ -143,6 +144,26 @@ describe( 'its functions for .out()', function () {
     expect( doc.sentences().itemAt( 0 ).out( its.stem ) ).to.deep.equal( 'decis want ate' );
     expect( doc.tokens().out( its.stem ) ).to.deep.equal( [ 'decis', 'want', 'ate' ] );
     expect( doc.tokens().itemAt( 1 ).out( its.stem ) ).to.deep.equal( 'want' );
+  } );
+
+  it( 'its.summary', function () {
+    expect( nlp.readDoc( documents.a ).out( its.summary ) ).to.deep.equal( documents.a );
+    expect( nlp.readDoc( documents.b ).out( its.summary ) ).to.deep.equal( documents.b );
+    expect( nlp.readDoc( documents.c ).out( its.summary ) ).to.deep.equal( documents.c );
+    expect( nlp.readDoc( documents.d ).out( its.summary ) ).to.deep.equal( documents.d );
+    expect( nlp.readDoc( documents.e ).out( its.summary ) ).to.deep.equal( documents.e );
+    expect( nlp.readDoc( documents.f ).out( its.summary ) ).to.deep.equal( documents.f );
+    expect( nlp.readDoc( documents.g ).out( its.summary ) ).to.deep.equal( documents.g );
+    expect( nlp.readDoc( documents.h ).out( its.summary ) ).to.deep.equal( documents.h );
+    expect( nlp.readDoc( documents.i ).out( its.summary ) ).to.deep.equal( documents.i );
+    expect( nlp.readDoc( documents.j ).out( its.summary ) ).to.deep.equal( documents.j );
+    expect( nlp.readDoc( documents.k ).out( its.summary ) ).to.deep.equal( documents.k );
+    expect( nlp.readDoc( documents.l ).out( its.summary ) ).to.deep.equal( documents.l );
+    expect( nlp.readDoc( documents.m ).out( its.summary ) ).to.deep.equal( documents.m );
+    expect( nlp.readDoc( documents.n ).out( its.summary ) ).to.deep.equal( documents.n );
+    expect( nlp.readDoc( documents.o ).out( its.summary ) ).to.deep.equal( documents.q );
+    expect( nlp.readDoc( documents.p ).out( its.summary ) ).to.deep.equal( documents.p );
+    expect( nlp.readDoc( documents.q ).out( its.summary ) ).to.deep.equal( documents.q );
   } );
 
   it( 'its.readabilityStats', function () {

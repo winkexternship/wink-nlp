@@ -115,6 +115,7 @@ allowed.its4document = new Set( [
   its.negationFlag,
   its.sentiment,
   its.stem,
+  its.summary,
   its.readabilityStats
 ] );
 
