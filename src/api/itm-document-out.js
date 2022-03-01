@@ -63,10 +63,6 @@ var itmDocumentOut = function ( rdd, itsf, addons ) {
     return ( document[ 2 ] === 1 );
   }
 
-  if ( itsfn === its.summary ) {
-    return itsfn( rdd, addons );
-  }
-
   if ( itsfn === its.readabilityStats ) {
     return itsfn( rdd, addons );
   }
