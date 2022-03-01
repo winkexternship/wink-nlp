@@ -71,6 +71,7 @@ var itmDocumentOut = function ( rdd, itsf, addons ) {
     return itsfn( rdd, addons );
   }
 
+<<<<<<< HEAD
   if ( itsfn === its.summary ) {
     const weights =  itsfn( rdd, addons );
     let summary = '';
@@ -81,6 +82,8 @@ var itmDocumentOut = function ( rdd, itsf, addons ) {
     return summary;
   }
 
+=======
+>>>>>>> bcec0b9a301252d00f834992cde07d24db7dee88
   // Setup the correct `as.fn` becuase the current markedup text would have
   // returned the `value`. Refer to `its.markedUpText`.
   var asfn = ( itsfn === its.markedUpText ) ? as.markedUpText : as.text;
