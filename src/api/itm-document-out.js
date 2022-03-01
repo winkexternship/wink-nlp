@@ -71,19 +71,16 @@ var itmDocumentOut = function ( rdd, itsf, addons ) {
     return itsfn( rdd, addons );
   }
 
-<<<<<<< HEAD
   if ( itsfn === its.summary ) {
     const weights =  itsfn( rdd, addons );
     let summary = '';
-    for ( let i = 0; i < 3; i += 1 ) {
+    for ( let i = 0; i < 4; i += 1 ) {
       summary += colTokensOut( rdd.sentences[weights[i].idx][0], rdd.sentences[weights[i].idx][1], rdd, its.value, as.text, addons );
     }
     console.log('Summary:');
     return summary;
   }
 
-=======
->>>>>>> bcec0b9a301252d00f834992cde07d24db7dee88
   // Setup the correct `as.fn` becuase the current markedup text would have
   // returned the `value`. Refer to `its.markedUpText`.
   var asfn = ( itsfn === its.markedUpText ) ? as.markedUpText : as.text;
