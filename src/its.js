@@ -162,15 +162,9 @@ its.readabilityStats = function ( rdd, addons ) {
   return addons.readabilityStats( rdd, its );
 }; // readabilityStats()
 
-<<<<<<< HEAD
 its.summary = function ( rdd, addons ) {
   return addons.summary( rdd, its );
 }; // summary()
-=======
-// its.summary = function ( rdd, addons ) {
-//   return addons.summary( rdd, its );
-// }; // summary()
->>>>>>> bcec0b9a301252d00f834992cde07d24db7dee88
 
 /* ------ utilities ------ */
 
