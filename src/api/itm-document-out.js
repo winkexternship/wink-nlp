@@ -34,6 +34,7 @@ var its = require( '../its.js' );
 var as = require( '../as.js' );
 var allowed = require( '../allowed.js' );
 var colTokensOut = require( './col-tokens-out.js' );
+var similarity = require('../../utilities/similarity');
 
 // ## itmDocumentOut
 /**
@@ -68,7 +69,10 @@ var itmDocumentOut = function ( rdd, itsf, addons ) {
   }
 
   if ( itsfn === its.summary ) {
-    const weights =  itsfn( rdd, addons );
+    if ( rdd.sentences.length <= 3 ) {
+      return colTokensOut( document[ 0 ], document[ 1 ], rdd, its.value, as.text, addons );
+    }
+    const weights =  itsfn( rdd, as, similarity, addons );
     let summary = '';
     for ( let i = 0; i < 4; i += 1 ) {
       summary += colTokensOut( rdd.sentences[weights[i].idx][0], rdd.sentences[weights[i].idx][1], rdd, its.value, as.text, addons );
