@@ -68,10 +68,16 @@ var itmDocumentOut = function ( rdd, itsf, addons ) {
   }
 
   if ( itsfn === its.summary ) {
-    const weights =  itsfn( rdd, addons );
+    const summ =  itsfn( rdd, addons );
     let summary = '';
+    if ( summ.numOfSentences < 4 ) {
+      for ( let i = 0; i < summ.numOfSentences; i += 1 ) {
+        summary += colTokensOut( rdd.sentences[summ.weights[i].idx][0], rdd.sentences[summ.weights[i].idx][1], rdd, its.value, as.text, addons );
+      }
+      return summary;
+    }
     for ( let i = 0; i < 4; i += 1 ) {
-      summary += colTokensOut( rdd.sentences[weights[i].idx][0], rdd.sentences[weights[i].idx][1], rdd, its.value, as.text, addons );
+      summary += colTokensOut( rdd.sentences[summ.weights[i].idx][0], rdd.sentences[summ.weights[i].idx][1], rdd, its.value, as.text, addons );
     }
     console.log('Summary:');
     return summary;
