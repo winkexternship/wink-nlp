@@ -162,8 +162,8 @@ its.readabilityStats = function ( rdd, addons ) {
   return addons.readabilityStats( rdd, its );
 }; // readabilityStats()
 
-its.summary = function ( rdd, as, similarity, addons ) {
-  return addons.summary( rdd, its, as, similarity );
+its.summary = function ( rdd, as, similarity, bm25, addons ) {
+  return addons.summary( rdd, its, as, similarity, bm25 );
 }; // summary()
 
 /* ------ utilities ------ */

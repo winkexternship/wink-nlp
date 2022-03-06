@@ -35,6 +35,7 @@ var as = require( '../as.js' );
 var allowed = require( '../allowed.js' );
 var colTokensOut = require( './col-tokens-out.js' );
 var similarity = require('../../utilities/similarity');
+var BM25Vectorizer = require('../../utilities/bm25-vectorizer');
 
 // ## itmDocumentOut
 /**
@@ -72,7 +73,8 @@ var itmDocumentOut = function ( rdd, itsf, addons ) {
     if ( rdd.sentences.length < 4 ) {
       return colTokensOut( document[ 0 ], document[ 1 ], rdd, its.value, as.text, addons );
     }
-    const summ =  itsfn( rdd, as, similarity, addons );
+    const bm25 = BM25Vectorizer();
+    const summ =  itsfn( rdd, as, similarity, bm25, addons );
     let summary = '';
     for ( let i = 0; i < 4; i += 1 ) {
       summary += colTokensOut( rdd.sentences[summ.weights[i].idx][0], rdd.sentences[summ.weights[i].idx][1], rdd, its.value, as.text, addons );
