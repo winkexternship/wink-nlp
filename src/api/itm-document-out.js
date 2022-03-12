@@ -70,14 +70,17 @@ var itmDocumentOut = function ( rdd, itsf, addons ) {
   }
 
   if ( itsfn === its.summary ) {
-    if ( rdd.sentences.length < 4 ) {
-      return colTokensOut( document[ 0 ], document[ 1 ], rdd, its.value, as.text, addons );
-    }
     const bm25 = BM25Vectorizer();
-    const summ =  itsfn( rdd, as, similarity, bm25, addons );
+    const textSummary =  itsfn( rdd, as, similarity, bm25, addons );
     let summary = '';
-    for ( let i = 0; i < 4; i += 1 ) {
-      summary += colTokensOut( rdd.sentences[summ.weights[i].idx][0], rdd.sentences[summ.weights[i].idx][1], rdd, its.value, as.text, addons );
+    for ( let i = 0; i < textSummary.weights.length; i += 1 ) {
+      if (textSummary.weights[i].length <= 3) {
+        summary += colTokensOut( rdd.sentences[textSummary.paraStarts[i]][0], rdd.sentences[textSummary.paraStarts[i] + textSummary.weights[i].length - 1][1], rdd, its.value, as.text, addons );
+      } else {
+        for ( let j = 0; j < 3; j += 1 )
+        summary += colTokensOut( rdd.sentences[textSummary.weights[i][j].idx + textSummary.paraStarts[i]][0], rdd.sentences[textSummary.weights[i][j].idx + textSummary.paraStarts[i]][1], rdd, its.value, as.text, addons );
+      }
+      summary += '\n\n';
     }
     console.log('Summary:');
     return summary;
