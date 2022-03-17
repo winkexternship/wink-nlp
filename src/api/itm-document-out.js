@@ -70,8 +70,7 @@ var itmDocumentOut = function ( rdd, itsf, addons ) {
   }
 
   if ( itsfn === its.summary ) {
-    const bm25 = BM25Vectorizer();
-    const textSummary =  itsfn( rdd, as, similarity, bm25, addons );
+    const textSummary =  itsfn( rdd, as, similarity, BM25Vectorizer, addons );
     let summary = '';
     for ( let i = 0; i < textSummary.weights.length; i += 1 ) {
       if (textSummary.weights[i].length <= 3) {
