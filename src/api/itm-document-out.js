@@ -75,9 +75,14 @@ var itmDocumentOut = function ( rdd, itsf, addons ) {
     for ( let i = 0; i < textSummary.weights.length; i += 1 ) {
       if (textSummary.weights[i].length <= 3) {
         summary += colTokensOut( rdd.sentences[textSummary.paraStarts[i]][0], rdd.sentences[textSummary.paraStarts[i] + textSummary.weights[i].length - 1][1], rdd, its.value, as.text, addons );
+      } else if (textSummary.weights[i].length < 15) {
+        for ( let j = 0; j < 3; j += 1 ) {
+          summary += colTokensOut( rdd.sentences[textSummary.weights[i][j].idx + textSummary.paraStarts[i]][0], rdd.sentences[textSummary.weights[i][j].idx + textSummary.paraStarts[i]][1], rdd, its.value, as.text, addons );
+        }
       } else {
-        for ( let j = 0; j < 3; j += 1 )
-        summary += colTokensOut( rdd.sentences[textSummary.weights[i][j].idx + textSummary.paraStarts[i]][0], rdd.sentences[textSummary.weights[i][j].idx + textSummary.paraStarts[i]][1], rdd, its.value, as.text, addons );
+        for ( let j = 0; j < textSummary.weights[i].length / 5; j += 1 ) {
+          summary += colTokensOut( rdd.sentences[textSummary.weights[i][j].idx + textSummary.paraStarts[i]][0], rdd.sentences[textSummary.weights[i][j].idx + textSummary.paraStarts[i]][1], rdd, its.value, as.text, addons ); 
+        }
       }
       summary += '\n\n';
     }
