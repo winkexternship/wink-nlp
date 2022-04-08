@@ -34,8 +34,6 @@ var its = require( '../its.js' );
 var as = require( '../as.js' );
 var allowed = require( '../allowed.js' );
 var colTokensOut = require( './col-tokens-out.js' );
-var similarity = require('../../utilities/similarity');
-var BM25Vectorizer = require('../../utilities/bm25-vectorizer');
 
 // ## itmDocumentOut
 /**
@@ -70,23 +68,24 @@ var itmDocumentOut = function ( rdd, itsf, addons ) {
   }
 
   if ( itsfn === its.summary ) {
-    const textSummary =  itsfn( rdd, as, similarity, BM25Vectorizer, addons );
+    const summaryInfo = itsfn( rdd );
     let summary = '';
-    for ( let i = 0; i < textSummary.weights.length; i += 1 ) {
-      if (textSummary.weights[i].length <= 3) {
-        summary += colTokensOut( rdd.sentences[textSummary.paraStarts[i]][0], rdd.sentences[textSummary.paraStarts[i] + textSummary.weights[i].length - 1][1], rdd, its.value, as.text, addons );
-      } else if (textSummary.weights[i].length < 15) {
+
+    for ( let i = 0; i < summaryInfo.weights.length; i += 1 ) {
+      if (summaryInfo.weights[i].length <= 3) {
+        summary += colTokensOut( rdd.sentences[summaryInfo.paraStarts[i]][0], rdd.sentences[summaryInfo.paraStarts[i] + summaryInfo.weights[i].length - 1][1], rdd, its.value, as.text, addons );
+      } else if (summaryInfo.weights[i].length < 15) {
         for ( let j = 0; j < 3; j += 1 ) {
-          summary += colTokensOut( rdd.sentences[textSummary.weights[i][j].idx + textSummary.paraStarts[i]][0], rdd.sentences[textSummary.weights[i][j].idx + textSummary.paraStarts[i]][1], rdd, its.value, as.text, addons );
+          summary += colTokensOut( rdd.sentences[summaryInfo.weights[i][j].idx + summaryInfo.paraStarts[i]][0], rdd.sentences[summaryInfo.weights[i][j].idx + summaryInfo.paraStarts[i]][1], rdd, its.value, as.text, addons );
         }
       } else {
-        for ( let j = 0; j < textSummary.weights[i].length / 5; j += 1 ) {
-          summary += colTokensOut( rdd.sentences[textSummary.weights[i][j].idx + textSummary.paraStarts[i]][0], rdd.sentences[textSummary.weights[i][j].idx + textSummary.paraStarts[i]][1], rdd, its.value, as.text, addons ); 
+        for ( let j = 0; j < summaryInfo.weights[i].length / 5; j += 1 ) {
+          summary += colTokensOut( rdd.sentences[summaryInfo.weights[i][j].idx + summaryInfo.paraStarts[i]][0], rdd.sentences[summaryInfo.weights[i][j].idx + summaryInfo.paraStarts[i]][1], rdd, its.value, as.text, addons ); 
         }
       }
       summary += '\n\n';
     }
-    console.log('Summary:');
+
     return summary;
   }
 
