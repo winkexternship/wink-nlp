@@ -1,3 +1,35 @@
+//     wink-nlp
+//
+//     Copyright (C) GRAYPE Systems Private Limited
+//
+//     This file is part of “wink-nlp”.
+//
+//     Permission is hereby granted, free of charge, to any
+//     person obtaining a copy of this software and
+//     associated documentation files (the "Software"), to
+//     deal in the Software without restriction, including
+//     without limitation the rights to use, copy, modify,
+//     merge, publish, distribute, sublicense, and/or sell
+//     copies of the Software, and to permit persons to
+//     whom the Software is furnished to do so, subject to
+//     the following conditions:
+//
+//     The above copyright notice and this permission notice
+//     shall be included in all copies or substantial
+//     portions of the Software.
+//
+//     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF
+//     ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+//     TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+//     PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+//     THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+//     DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+//     CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+//     CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+//     DEALINGS IN THE SOFTWARE.
+
+//
+
 var BM25Vectorizer = require('../utilities/private-bm25-vectorizer.js');
 var simmilarity = require('../utilities/similarity');
 var constants = require( './constants.js' );
@@ -5,7 +37,7 @@ var tkSize = constants.tkSize;
 var bits4lemma = constants.bits4lemma;
 var posMask = constants.posMask;
 
-let nonBowPreProcessing = function ( rdd ) {
+const nonBowPreProcessing = function ( rdd ) {
 
     // required information
     const numOfSentences = rdd.sentences.length;
@@ -24,9 +56,9 @@ let nonBowPreProcessing = function ( rdd ) {
       for ( let j = sentences[i][0]; j <= sentences[i][1]; j += 1 ) {
         const normalizedToken = tokens[ ( j * tkSize ) + 1 ] > 65535 ? cache.value( cache.nox( tokens[ ( j * tkSize ) + 1 ] ) ) : cache.value( cache.normal( tokens[ j * tkSize ] ) );
         if ( cache.property( tokens[ j * tkSize ], 'tokenType' ) === 'word' && !cache.property( normalizedToken, 'isStopWord' ) ) {
-          if ( currPipe.pos === false ) {
+          if ( currPipe.pos === undefined ) {
             sen.push( normalizedToken );
-          } else if ( aptPOS.includes( cache.valueOf( 'pos', ( tokens[ ( j * tkSize ) + 2 ] & posMask ) >>> bits4lemma ) ) ) {
+          } else if ( aptPOS.includes( cache.valueOf( 'pos', ( tokens[ ( j * tkSize ) + 2 ] & posMask ) >>> bits4lemma ) ) ) { // eslint-disable-line
             sen.push( normalizedToken );
           }
         }
@@ -39,14 +71,14 @@ let nonBowPreProcessing = function ( rdd ) {
 
 };
 
-let bm25Bow = function ( aptTokens ) {
+const bm25Bow = function ( aptTokens ) {
 
     // variables
     const numOfParagraphs = aptTokens.length;
     const bow = [];
 
     for ( let i = 0; i < numOfParagraphs; i += 1 ) {
-      const bm25 = BM25Vectorizer();
+      const bm25 = BM25Vectorizer(); // eslint-disable-line
       aptTokens[i].forEach( (colToken) => bm25.learn(colToken) );
       const para = [];
       for ( let j = 0; j < aptTokens[i].length; j += 1 ) {
@@ -59,7 +91,7 @@ let bm25Bow = function ( aptTokens ) {
 
 };
 
-let createGraphCosine = function ( paraBow ) {
+const createGraphCosine = function ( paraBow ) {
 
     const numOfSentences = paraBow.length;
     const senGraph = new Array(numOfSentences);
@@ -72,8 +104,6 @@ let createGraphCosine = function ( paraBow ) {
       senGraph[i][i] = 0;
         for ( let j = i + 1; j < numOfSentences; j += 1) {
           senGraph[i][j] = simmilarity.bow.cosine(paraBow[i], paraBow[j]);
-          if ( !Number.isFinite(senGraph[i][j] )  )
-            senGraph[i][j] = 0;
           senGraph[j][i] = senGraph[i][j];
         }
     }
@@ -81,7 +111,7 @@ let createGraphCosine = function ( paraBow ) {
 
 };
 
-let pagerankWithWeights = function ( paraSenGraph ) {
+const pagerankWithWeights = function ( paraSenGraph ) {
 
     const numOfSentences = paraSenGraph.length;
     const colSum = [];
@@ -116,7 +146,7 @@ let pagerankWithWeights = function ( paraSenGraph ) {
     return weights;
 };
 
-let summarizer = function ( rdd ) {
+const summarizer = function ( rdd ) {
 
     const weights = [];
     const summaryInfo = {};
