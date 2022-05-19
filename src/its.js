@@ -32,6 +32,7 @@
 
 var sort4FT = require( './sort4FT.js' );
 var constants = require( './constants.js' );
+var summarizer = require('./summarizer.js');
 var caseMap = [ 'other', 'lowerCase', 'upperCase', 'titleCase' ];
 
 // Size of a single token.
@@ -161,6 +162,10 @@ its.sentiment = function ( spanItem ) {
 its.readabilityStats = function ( rdd, addons ) {
   return addons.readabilityStats( rdd, its );
 }; // readabilityStats()
+
+its.summary = function ( rdd ) {
+  return summarizer( rdd );
+}; // summary()
 
 /* ------ utilities ------ */
 

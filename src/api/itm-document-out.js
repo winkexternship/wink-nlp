@@ -67,6 +67,28 @@ var itmDocumentOut = function ( rdd, itsf, addons ) {
     return itsfn( rdd, addons );
   }
 
+  if ( itsfn === its.summary ) {
+    const summaryInfo = itsfn( rdd );
+    let summary = '';
+
+    for ( let i = 0; i < summaryInfo.weights.length; i += 1 ) {
+      if (summaryInfo.weights[i].length <= 3) {
+        summary += colTokensOut( rdd.sentences[summaryInfo.paraStarts[i]][0], rdd.sentences[summaryInfo.paraStarts[i] + summaryInfo.weights[i].length - 1][1], rdd, its.value, as.text, addons );
+      } else if (summaryInfo.weights[i].length < 15) {
+        for ( let j = 0; j < 3; j += 1 ) {
+          summary += colTokensOut( rdd.sentences[summaryInfo.weights[i][j].idx + summaryInfo.paraStarts[i]][0], rdd.sentences[summaryInfo.weights[i][j].idx + summaryInfo.paraStarts[i]][1], rdd, its.value, as.text, addons );
+        }
+      } else {
+        for ( let j = 0; j < summaryInfo.weights[i].length / 5; j += 1 ) {
+          summary += colTokensOut( rdd.sentences[summaryInfo.weights[i][j].idx + summaryInfo.paraStarts[i]][0], rdd.sentences[summaryInfo.weights[i][j].idx + summaryInfo.paraStarts[i]][1], rdd, its.value, as.text, addons ); 
+        }
+      }
+      summary += '\n\n';
+    }
+
+    return summary;
+  }
+
   // Setup the correct `as.fn` becuase the current markedup text would have
   // returned the `value`. Refer to `its.markedUpText`.
   var asfn = ( itsfn === its.markedUpText ) ? as.markedUpText : as.text;
