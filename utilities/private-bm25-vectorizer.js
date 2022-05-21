@@ -84,9 +84,11 @@ const getValidCfgNum = function ( num, numDefault, min, max ) {
  *
  * @param  {object}     config defines values of various BM25 configuration params —
  *                      k, k1, b and normalization scheme — none, l1, or l2.
+ * @param {object}      its gives various helper functions.
+ * @param {object}      allowed gives various allowed functionalities.
  * @return {undefined}  Nothing!
  */
-var bm25Vectorizer = function ( config ) {
+var bm25Vectorizer = function ( config, its, allowed ) {
   const cfg =  ( helper.isObject( config ) ) ? config : Object.create( null );
   // Setup BM25 Parameters.
   const k = getValidCfgNum( cfg.k, 1, 0, 100 );

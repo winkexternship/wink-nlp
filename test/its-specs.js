@@ -172,6 +172,19 @@ describe( 'its functions for .out()', function () {
     expect( doc.out( its.readabilityStats ) ).to.deep.equal( rs );
   } );
 
+  it( 'its.summary', function () {
+    const text = `The summer evening had begun to fold the world in its mysterious
+    embrace. Far away in the west the sun was setting and the last glow of
+    all too fleeting day lingered lovingly on sea and strand, on the proud
+    promontory of dear old Howth guarding as ever the waters of the bay, on
+    the weedgrown rocks along Sandymount shore and, last but not least, on
+    the quiet church whence there streamed forth at times upon the stillness
+    the voice of prayer to her who is in her pure radiance a beacon ever to
+    the stormtossed heart of man, Mary, star of the sea.`;
+    const doc = nlp.readDoc( text );
+    expect( doc.out(its.summary )).to.deep.equal(text);
+  });
+
   it( 'selected entity with its.detail, its.span as.?', function () {
     const s = 'Conut downn starts from ten, nine, eight...';
     const se = nlp.readDoc( s ).entities().filter( ( e ) => ( e.out( its.type ) === 'CARDINAL' ) );

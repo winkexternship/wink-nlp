@@ -5,7 +5,7 @@ var tkSize = constants.tkSize;
 var bits4lemma = constants.bits4lemma;
 var posMask = constants.posMask;
 
-let nonBowPreProcessing = function ( rdd ) {
+const nonBowPreProcessing = function ( rdd ) {
 
     // required information
     const numOfSentences = rdd.sentences.length;
@@ -39,7 +39,7 @@ let nonBowPreProcessing = function ( rdd ) {
 
 };
 
-let bm25Bow = function ( aptTokens ) {
+const bm25Bow = function ( aptTokens ) {
 
     // variables
     const numOfParagraphs = aptTokens.length;
@@ -59,7 +59,7 @@ let bm25Bow = function ( aptTokens ) {
 
 };
 
-let createGraphCosine = function ( paraBow ) {
+const createGraphCosine = function ( paraBow ) {
 
     const numOfSentences = paraBow.length;
     const senGraph = new Array(numOfSentences);
@@ -81,7 +81,7 @@ let createGraphCosine = function ( paraBow ) {
 
 };
 
-let pagerankWithWeights = function ( paraSenGraph ) {
+const pagerankWithWeights = function ( paraSenGraph ) {
 
     const numOfSentences = paraSenGraph.length;
     const colSum = [];
@@ -116,7 +116,7 @@ let pagerankWithWeights = function ( paraSenGraph ) {
     return weights;
 };
 
-let summarizer = function ( rdd ) {
+const summarizer = function ( rdd ) {
 
     const weights = [];
     const summaryInfo = {};
