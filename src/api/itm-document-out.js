@@ -80,7 +80,7 @@ var itmDocumentOut = function ( rdd, itsf, addons ) {
         }
       } else {
         for ( let j = 0; j < summaryInfo.weights[i].length / 5; j += 1 ) {
-          summary += colTokensOut( rdd.sentences[summaryInfo.weights[i][j].idx + summaryInfo.paraStarts[i]][0], rdd.sentences[summaryInfo.weights[i][j].idx + summaryInfo.paraStarts[i]][1], rdd, its.value, as.text, addons ); 
+          summary += colTokensOut( rdd.sentences[summaryInfo.weights[i][j].idx + summaryInfo.paraStarts[i]][0], rdd.sentences[summaryInfo.weights[i][j].idx + summaryInfo.paraStarts[i]][1], rdd, its.value, as.text, addons );
         }
       }
       summary += '\n\n';

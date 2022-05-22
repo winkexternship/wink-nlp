@@ -30,9 +30,7 @@
 
 //
 
-var allowed = require( './allowed.js' );
 var helper = require( '../src/helper.js' );
-var its = require( '../src/its.js' );
 
 // Norm computation helper connstants and functions.
 const L2 = 'l2';
